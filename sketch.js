@@ -14,6 +14,8 @@ var showFlag = 0;
 var centerX;
 var centerY;
 
+var bugubbleSelected;
+
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
@@ -29,27 +31,67 @@ function draw() {
 		centerY = windowHeight/2
 		centerBubble.setParameter(centerX,centerY,250);
 
-		if(calculateMouse() > 0)
+		background(30);
+
+		bugubbleSelected = calcDistFromBub();
+		if(bugubbleSelected > 0)
 		{
-			background(100);
+			sideBubbles[bugubbleSelected-1].setColor(255,255,60)
 		}
 		else
 		{
-			background(30);
+			setColorAllBubbles(255,255,160);
 		}
 
 
-	if(value == 0)
-	{
-		animateShow();
-	}
-	else
-	{
-		animateHide();
-	}
+		if(value == 0)
+		{
+			animateShow();
+		}
+		else
+		{
+			animateHide();
+		}
 }
 
+function calcDistFromBub()
+{
+		var returnValue = 0;
 
+		for (index = 0; index < minionBoubbleNo; index++)
+		{
+				var distance = int(dist(sideBubbles[index].x, sideBubbles[index].y, mouseX, mouseY));
+
+				if(distance < sideBubbles[index].d/2)
+				{
+						returnValue = index+1;
+						break;
+				}
+				else
+				{
+						returnValue = 0;
+				}
+		}
+
+
+		return returnValue;
+
+}
+
+function mousePressed() {
+	if(bugubbleSelected > 0)
+	{
+		if (value === 0)
+		{
+			value = 255;
+		}
+		else
+		{
+			value = 0;
+		}
+	}
+
+}
 
 function calculateMouse()
 {
@@ -58,23 +100,17 @@ function calculateMouse()
 
 	if(distance < centerBubble.d/2)
 	{
-			returnValue = 1;
+			returnValue = 99;
 	}
 	else
 	{
-			returnValie = 0;
+			returnValue = 0;
 	}
 
 	return returnValue;
 }
 
-function mousePressed() {
-		if (value === 0) {
-			value = 255;
-		} else {
-			value = 0;
-		}
-}
+
 
 function animateReShow()
 {
@@ -144,6 +180,15 @@ function initAllBubbles()
 		}
 }
 
+function setColorAllBubbles(r,g,b)
+{
+		centerBubble.setColor(r,g,b);
+		for (index = 0; index < minionBoubbleNo; index++)
+		{
+			sideBubbles[index].setColor(r,g,b);
+		}
+}
+
 
 
 // Bubble class
@@ -152,6 +197,13 @@ function Bubble(x, y, d)
   this.x;
   this.y;
   this.d;
+
+	this.col = color(255, 255 , 255);
+
+	this.setColor = function(r,g,b)
+	{
+		this.col = color(r, g, b);
+	};
 
 	this.setParameter = function(x,y,d)
 	{
@@ -162,7 +214,7 @@ function Bubble(x, y, d)
 
   this.display = function()
 	{
-		fill(200,200,0);
+		fill(this.col);
 		ellipse(this.x, this.y, this.d, this.d);
   }
 
