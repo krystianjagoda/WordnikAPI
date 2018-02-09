@@ -26,6 +26,7 @@ function setup() {
 
 }
 
+
 function draw() {
 		centerX = windowWidth/2;
 		centerY = windowHeight/2
