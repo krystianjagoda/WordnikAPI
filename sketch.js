@@ -1,13 +1,17 @@
 var centerBubble;
+var cBubble_d = 0;
 var d ;
 var alpha;
 var minionBoubbleNo = 6;
 
 var sideBubbles = [6];
+var sBubble_d = 0;
 
-var speed = 50;
+var speed = 0;
 var test = 0;
-var value = 0;
+
+var mState = 0;
+var stateCounter = 0;
 
 var showFlag = 0;
 
@@ -27,12 +31,16 @@ function setup() {
 }
 
 
-function draw() {
-		centerX = windowWidth/2;
-		centerY = windowHeight/2
-		centerBubble.setParameter(centerX,centerY,250);
-
+function draw()
+{
 		background(30);
+		centerX = windowWidth/2;
+		centerY = windowHeight/2;
+		cBubble_d = windowWidth/9;
+		sBubble_d = windowWidth/6;
+		speed = 50;
+
+		centerBubble.setParameter(centerX,centerY,cBubble_d);
 
 		bugubbleSelected = calcDistFromBub();
 		if(bugubbleSelected > 0)
@@ -45,15 +53,70 @@ function draw() {
 		}
 
 
-		if(value == 0)
+		if(mState == 0)
 		{
 			animateShow();
 		}
-		else
+		else if(mState == 1)
+		{
+				setAllBubbles(sBubble_d, sBubble_d/2);
+				drawAllBubbles();
+		}
+		else if(mState == 2)
 		{
 			animateHide();
 		}
+
+		textSize(25);
+		fill(255);
+		text('stateCounter', windowWidth-420, 100);
+		text(stateCounter, windowWidth-200, 100);
+
+		text('mState', windowWidth-420, 140);
+		text(mState, windowWidth-200, 140);
+
+		text('bugubbleSelected', windowWidth-420, 180);
+		text(bugubbleSelected, windowWidth-200, 180);
+
+		text('speed', windowWidth-420, 220);
+		text(speed, windowWidth-200, 220);
+
+
+
+
+
 }
+
+function animateShow()
+{
+	if(stateCounter < sBubble_d)
+	{
+		stateCounter = stateCounter + speed;
+	}
+	if(stateCounter > sBubble_d)
+	{
+		mState = 1;
+	}
+	setAllBubbles(stateCounter, stateCounter/2);
+	drawAllBubbles();
+}
+
+function animateHide()
+{
+				if(stateCounter > 0)
+				{
+					stateCounter = stateCounter - speed;
+				}
+				if(stateCounter == 0)
+				{
+						mState = 0;
+				}
+
+				setAllBubbles(stateCounter, stateCounter/2);
+				drawAllBubbles();
+}
+
+
 
 function calcDistFromBub()
 {
@@ -82,13 +145,9 @@ function calcDistFromBub()
 function mousePressed() {
 	if(bugubbleSelected > 0)
 	{
-		if (value === 0)
+		if (mState == 1)
 		{
-			value = 255;
-		}
-		else
-		{
-			value = 0;
+			mState = 2;
 		}
 	}
 
@@ -113,40 +172,7 @@ function calculateMouse()
 
 
 
-function animateReShow()
-{
-		animateHide()
-}
 
-function animateShow()
-{
-				if(test < 300)
-				{
-					test = test + speed;
-				}
-				if(test > 300)
-				{
-					showFlag = 1;
-				}
-
-				setAllBubbles(test, test/2);
-				drawAllBubbles();
-}
-
-function animateHide()
-{
-				if(test > 0)
-				{
-					test = test - speed;
-				}
-				if(test == 0)
-				{
-						value = 0;
-				}
-
-				setAllBubbles(test, test/2);
-				drawAllBubbles();
-}
 
 
 function setAllBubbles(distance, radius)
@@ -167,7 +193,10 @@ function drawAllBubbles()
 		{
 			sideBubbles[index].display();
 		}
+
+
 		centerBubble.display();
+
 }
 
 function initAllBubbles()
@@ -200,6 +229,7 @@ function Bubble(x, y, d)
   this.d;
 
 	this.col = color(255, 255 , 255);
+	this.textValue = "TEST";
 
 	this.setColor = function(r,g,b)
 	{
@@ -217,6 +247,10 @@ function Bubble(x, y, d)
 	{
 		fill(this.col);
 		ellipse(this.x, this.y, this.d, this.d);
+		textSize(30);
+		fill(0);
+		textAlign(CENTER,CENTER);
+		text(this.textValue, this.x, this.y);
   }
 
 };
