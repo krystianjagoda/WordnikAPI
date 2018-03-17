@@ -1,53 +1,83 @@
 var dispDebug = 1;
 
-var debugSlotsNo = 16;
+var debugSlotNo = 16;
+var debugSlots = [debugSlotNo];
+var slotsToDisply = 0;
+var empty = "EMPTY";
 
-var valuePos = 130;
-var namePos = 420
-var debugSlots = [debugSlotsNo];
+var xPos = 380;
+var yPos = 80;
+var spacing = 30;
+var debugTextSize = 18;
 
+
+function showDebug()
+{
+  var xLocation = windowWidth-xPos;
+
+  fill(5, 80);
+  rect(windowWidth-xPos-20, yPos-30, 350, 800);
+  textSize(debugTextSize);
+  fill(255);
+	textAlign(LEFT,CENTER);
+
+  debugSlots[0].set("stateCounter",stateCounter);
+  debugSlots[1].set("mState",mState);
+  debugSlots[2].set("bugubbleSelected",bugubbleSelected);
+  debugSlots[3].set("speed",speed);
+  debugSlots[4].set("slotsToDisply",slotsToDisply);
+  debugSlots[5].set("EMPTY",empty);
+  debugSlots[6].set("EMPTY",empty);
+  debugSlots[7].set("EMPTY",empty);
+  debugSlots[8].set("EMPTY",empty);
+  debugSlots[9].set("EMPTY",empty);
+  debugSlots[10].set("EMPTY",empty);
+  debugSlots[11].set("EMPTY",empty);
+  debugSlots[12].set("EMPTY",empty);
+  debugSlots[13].set("EMPTY",empty);
+  debugSlots[14].set("EMPTY",empty);
+  debugSlots[15].set("EMPTY",empty);
+
+  slotsToDisply = 0;
+  for (index = 0; index < debugSlotNo; index++)
+  {
+    if(debugSlots[index].value != empty)
+    {
+      slotsToDisply++;
+    }
+  }
+
+  for (index = 0; index < slotsToDisply; index++)
+  {
+    debugSlots[index].display(xLocation, yPos+index*spacing);
+  }
+
+}
+
+function debugLine(name, value)
+{
+  this.name = name;
+  this.value = value;
+
+  this.display = function(Xpos, Ypos)
+  {
+    text(this.name, Xpos, Ypos);
+    text(this.value, Xpos+260, Ypos);
+  };
+
+  this.set = function(name, value)
+  {
+    this.name = name;
+    this.value = value;
+  }
+
+};
 
 
 function initDebug()
 {
-  for (index = 0; index < debugSlotsNo; index++)
+  for (index = 0; index < debugSlotNo; index++)
   {
-    debugSlots[index] = new debugLine();
+    debugSlots[index] = new debugLine("EMPTY", "EMPTY");
   }
 }
-
-function showDebug()
-{
-
-  fill(5, 80);
-  rect(windowWidth-450, 50, 400, 800);
-  textSize(22);
-  fill(255);
-	textAlign(LEFT,CENTER);
-
-
-  text('stateCounter', windowWidth-namePos , 100);
-  text(stateCounter, windowWidth-valuePos, 100);
-
-  text('mState', windowWidth-namePos, 140);
-  text(mState, windowWidth-valuePos, 140);
-
-  text('bugubbleSelected', windowWidth-namePos, 180);
-  text(bugubbleSelected, windowWidth-valuePos, 180);
-
-  text('speed', windowWidth-namePos, 220);
-  text(speed, windowWidth-valuePos, 220);
-}
-
-function debugLine()
-{
-  this.name;
-  this.value;
-
-  this.display = function(Xpos, Ypos)
-	{
-    text(this.name, Xpos, Ypos);
-    text(this.value, Xpos, Ypos);
-  }
-
-};
