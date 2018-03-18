@@ -1,56 +1,65 @@
+var canvWidth = 800;
+var canHeight = 600;
+
 
 function setup() {
-	createCanvas(windowWidth, windowHeight);
-	initDebug();
+	canvWidth = windowWidth;
+	canHeight = windowHeight;
+	createCanvas(canvWidth, canHeight);
 
-	background(30);
 	frameRate(30);
 
+	initDebug();
 	initAllBubbles();
-
 }
 
 
 function draw()
 {
 		background(30);
-		centerX = windowWidth/2;
-		centerY = windowHeight/2;
-		cBubble_d = windowWidth/9;
-		sBubble_d = windowWidth/6;
+
+		canvWidth = windowWidth;
+		canHeight = windowHeight;
+
+		centerX = canvWidth/2;
+		centerY = canHeight/2;
+
+		if(canvWidth > canHeight){
+			cBubble_d = canvWidth/9;
+			sBubble_d = canvWidth/6;
+		}
+		else {
+			cBubble_d = canHeight/9;
+			sBubble_d = canHeight/6;
+		}
+
 		speed = 50;
 
-		centerBubble.setParameter(centerX,centerY,cBubble_d);
 
+		centerBubble.setParameter(centerX,centerY,cBubble_d);
 		bugubbleSelected = calcDistFromBub();
-		if(bugubbleSelected > 0)
-		{
+
+		if(bugubbleSelected > 0){
 			sideBubbles[bugubbleSelected-1].setColor(255,255,60)
 		}
-		else
-		{
+		else{
 			setColorAllBubbles(255,255,160);
 		}
 
 
-		if(mState == 0)
-		{
+		if(mState == 0){
 			animateShow();
 		}
-		else if(mState == 1)
-		{
+		else if(mState == 1){
 				setAllBubbles(sBubble_d, sBubble_d/2);
 				drawAllBubbles();
 		}
-		else if(mState == 2)
-		{
+		else if(mState == 2){
 			animateHide();
 		}
 
-		if(dispDebug == 1)
-		{
+		if(dispDebug == 1){
 		  showDebug();
-
 		}
 
 
@@ -58,12 +67,10 @@ function draw()
 
 function animateShow()
 {
-	if(stateCounter < sBubble_d)
-	{
+	if(stateCounter < sBubble_d){
 		stateCounter = stateCounter + speed;
 	}
-	if(stateCounter > sBubble_d)
-	{
+	if(stateCounter > sBubble_d){
 		mState = 1;
 	}
 	setAllBubbles(stateCounter, stateCounter/2);
@@ -72,17 +79,15 @@ function animateShow()
 
 function animateHide()
 {
-				if(stateCounter > 0)
-				{
-					stateCounter = stateCounter - speed;
-				}
-				if(stateCounter == 0)
-				{
-						mState = 0;
-				}
+	if(stateCounter > 0){
+		stateCounter = stateCounter - speed;
+	}
+	if(stateCounter == 0){
+			mState = 0;
+	}
 
-				setAllBubbles(stateCounter, stateCounter/2);
-				drawAllBubbles();
+	setAllBubbles(stateCounter, stateCounter/2);
+	drawAllBubbles();
 }
 
 
@@ -112,14 +117,17 @@ function calcDistFromBub()
 }
 
 function mousePressed() {
-	if(bugubbleSelected > 0)
-	{
-		if (mState == 1)
-		{
+	if(bugubbleSelected > 0){
+		if (mState == 1){
 			mState = 2;
 		}
 	}
+}
 
+function keyTyped() {
+  if (key === 'd'){
+    debugToggle();
+	}
 }
 
 function calculateMouse()

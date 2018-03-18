@@ -10,3 +10,4 @@ var centerX;
 var centerY;
 
 var bugubbleSelected;
+var debugSelected;

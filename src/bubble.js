@@ -31,7 +31,7 @@ function Bubble(x, y, d)
 	{
 		fill(this.col);
 		ellipse(this.x, this.y, this.d, this.d);
-		textSize(30);
+		textSize(sBubble_d/10);
 		fill(0);
 		textAlign(CENTER,CENTER);
 		text(this.textValue, this.x, this.y);
