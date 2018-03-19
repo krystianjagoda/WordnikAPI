@@ -11,3 +11,6 @@ var centerY;
 
 var bugubbleSelected;
 var debugSelected;
+
+
+var inputData;

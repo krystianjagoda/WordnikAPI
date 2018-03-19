@@ -43,7 +43,7 @@ function draw()
 			sideBubbles[bugubbleSelected-1].setColor(255,255,60)
 		}
 		else{
-			setColorAllBubbles(255,255,160);
+			//setColorAllBubbles(255,255,160);
 		}
 
 
@@ -90,7 +90,12 @@ function animateHide()
 	drawAllBubbles();
 }
 
-
+function getRandomColor(){
+	var r = random(255);
+	var g = random(255);
+	var b = random(255);
+	return color(r, g, b);
+}
 
 function calcDistFromBub()
 {
@@ -119,6 +124,7 @@ function calcDistFromBub()
 function mousePressed() {
 	if(bugubbleSelected > 0){
 		if (mState == 1){
+			setRandColorAllBubbles();
 			mState = 2;
 		}
 	}
@@ -127,6 +133,12 @@ function mousePressed() {
 function keyTyped() {
   if (key === 'd'){
     debugToggle();
+	}
+}
+
+function keyTyped() {
+  if (key === 'a'){
+    wordnikAsk();
 	}
 }
 

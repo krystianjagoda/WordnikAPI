@@ -37,12 +37,12 @@ function showDebug(){
     debugSlots[2].set("bugubbleSelected",bugubbleSelected);
     debugSlots[3].set("speed",speed);
     debugSlots[4].set("slotsToDisply",slotsToDisply);
-    debugSlots[5].set("EMPTY",empty);
-    debugSlots[6].set("EMPTY",empty);
-    debugSlots[7].set("EMPTY",empty);
-    debugSlots[8].set("EMPTY",empty);
-    debugSlots[9].set("EMPTY",empty);
-    debugSlots[10].set("EMPTY",empty);
+    debugSlots[5].set("word_A",empty);
+    debugSlots[6].set("word_B",empty);
+    debugSlots[7].set("word_C",empty);
+    debugSlots[8].set("word_D",empty);
+    debugSlots[9].set("word_E",empty);
+    debugSlots[10].set("word_F",empty);
     debugSlots[11].set("EMPTY",empty);
     debugSlots[12].set("EMPTY",empty);
     debugSlots[13].set("EMPTY",empty);
@@ -76,7 +76,7 @@ function debugLine(name, value){
 
   this.display = function(Xpos, Ypos){
     text(this.name, Xpos, Ypos);
-    text(this.value, Xpos+260, Ypos);
+    text(this.value, Xpos+200, Ypos);
   };
 
   this.set = function(name, value){
