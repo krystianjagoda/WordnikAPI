@@ -2,6 +2,7 @@ var canvWidth = 800;
 var canHeight = 600;
 
 
+
 function setup() {
 	canvWidth = windowWidth;
 	canHeight = windowHeight;
@@ -24,17 +25,41 @@ function draw()
 		centerX = canvWidth/2;
 		centerY = canHeight/2;
 
-		if(canvWidth > canHeight){
-			cBubble_d = canvWidth/9;
-			sBubble_d = canvWidth/6;
+		if(inputMode == 1){
+				if(windowWidth< 800){
+					drawInputScreen(canvWidth-60, 180);
+				}
+				else{
+					drawInputScreen(800, 180);
+				}
 		}
-		else {
-			cBubble_d = canHeight/9;
-			sBubble_d = canHeight/6;
+		else{
+
+			if(canvWidth > canHeight){
+				cBubble_d = canvWidth/9;
+				sBubble_d = canvWidth/6;
+			}
+			else {
+				cBubble_d = canHeight/9;
+				sBubble_d = canHeight/6;
+			}
+
+			speed = 50;
+
+			if(mState == 0){
+				animateShow();
+			}
+			else if(mState == 1){
+					setAllBubbles(sBubble_d, sBubble_d/2);
+					drawAllBubbles();
+			}
+			else if(mState == 2){
+				animateHide();
+			}
+
+
+
 		}
-
-		speed = 50;
-
 
 		centerBubble.setParameter(centerX,centerY,cBubble_d);
 		bugubbleSelected = calcDistFromBub();
@@ -47,19 +72,8 @@ function draw()
 		}
 
 
-		if(mState == 0){
-			animateShow();
-		}
-		else if(mState == 1){
-				setAllBubbles(sBubble_d, sBubble_d/2);
-				drawAllBubbles();
-		}
-		else if(mState == 2){
-			animateHide();
-		}
-
 		if(dispDebug == 1){
-		  showDebug();
+			showDebug();
 		}
 
 
@@ -121,6 +135,9 @@ function calcDistFromBub()
 
 }
 
+
+
+
 function mousePressed() {
 	if(bugubbleSelected > 0){
 		if (mState == 1){
@@ -130,16 +147,39 @@ function mousePressed() {
 	}
 }
 
-function keyTyped() {
-  if (key === 'd'){
-    debugToggle();
+function keyPressed(){
+	if (keyCode == BACKSPACE){
+		newSearchFlag = 1;
+		inputData = "type a word...";
+	}
+	if (keyCode == ENTER){
+		if(inputMode == 1){
+			wordnikAsk(inputData);
+			centerBubble.setText(inputData);
+			typeDone();
+		}
+		else{
+			typeStart();
+		}
+
 	}
 }
 
-function keyTyped() {
-  if (key === 'a'){
-    wordnikAsk();
+function keyTyped(){
+	if(inputMode){
+		if(newSearchFlag){
+			newSearchFlag = 0;
+			inputData = "";
+		}
+		inputData += key;
+
 	}
+
+	if (key === 'd'){
+		debugToggle();
+	}
+
+	return false;
 }
 
 function calculateMouse()

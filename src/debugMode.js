@@ -37,7 +37,7 @@ function showDebug(){
     debugSlots[2].set("bugubbleSelected",bugubbleSelected);
     debugSlots[3].set("speed",speed);
     debugSlots[4].set("slotsToDisply",slotsToDisply);
-    debugSlots[5].set("word_A",empty);
+    debugSlots[5].set("inputData",inputData);
     debugSlots[6].set("word_B",empty);
     debugSlots[7].set("word_C",empty);
     debugSlots[8].set("word_D",empty);

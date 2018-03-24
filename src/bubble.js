@@ -12,7 +12,7 @@ function Bubble(x, y, d){
   this.d;
 
 	this.col = color(255, 255 , 255);
-	this.textValue = "TEST";
+	this.textValue = "";
 
   this.setText = function(inputText){
 	   this.textValue = inputText;

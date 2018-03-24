@@ -13,4 +13,7 @@ var bugubbleSelected;
 var debugSelected;
 
 
-var inputData;
+var wordnikData;
+
+var inputData = "type a word...";
+var inputMode = 1;
