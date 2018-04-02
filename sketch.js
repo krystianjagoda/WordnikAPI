@@ -1,11 +1,23 @@
 var canvWidth = 800;
 var canHeight = 600;
 
+// TO DO:
+// > Fix Init colors - function to color on every iteration
+// > Fix color selection - the color foes yellow and stays yellow
+// 												( add color array with color for each bubble)
+// > define range of colors - not to dark, cuz black text is not readable -
+//                           calc color base on text, this way it will be
+//                           alwasy the same for specific word
+// > Add function to check if word is okay, don't display bubbles
+//                           until the word is correct
+// > Speed sacling - for smaller window reduce the Speed
+
 
 
 function setup() {
 	canvWidth = windowWidth;
 	canHeight = windowHeight;
+	speed = 50
 	createCanvas(canvWidth, canHeight);
 
 	frameRate(30);
@@ -19,8 +31,7 @@ function draw()
 {
 		background(30);
 
-		canvWidth = windowWidth;
-		canHeight = windowHeight;
+
 
 		centerX = canvWidth/2;
 		centerY = canHeight/2;
@@ -44,7 +55,7 @@ function draw()
 				sBubble_d = canHeight/6;
 			}
 
-			speed = 50;
+
 
 			if(mState == 0){
 				animateShow();
@@ -77,6 +88,12 @@ function draw()
 		}
 
 
+}
+
+
+function windowResized() {
+	canvWidth = windowWidth;
+	canHeight = windowHeight;
 }
 
 function animateShow()
@@ -141,6 +158,9 @@ function calcDistFromBub()
 function mousePressed() {
 	if(bugubbleSelected > 0){
 		if (mState == 1){
+			slectedWord = relatedWords[bugubbleSelected-1];
+			wordnikAsk(slectedWord);
+			searchWord = slectedWord;
 			setRandColorAllBubbles();
 			mState = 2;
 		}
@@ -155,7 +175,7 @@ function keyPressed(){
 	if (keyCode == ENTER){
 		if(inputMode == 1){
 			wordnikAsk(inputData);
-			centerBubble.setText(inputData);
+			searchWord = inputData;
 			typeDone();
 		}
 		else{

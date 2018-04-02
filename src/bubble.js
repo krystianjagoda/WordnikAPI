@@ -96,7 +96,7 @@ function setColorAllBubbles(r,g,b)
 
 function setTextAllBubbles()
 {
-		centerBubble.setText("TBD");
+		centerBubble.setText(searchWord);
 		for (index = 0; index < minionBoubbleNo; index++)
 		{
 			sideBubbles[index].setText(relatedWords[index]);

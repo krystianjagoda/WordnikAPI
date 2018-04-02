@@ -15,5 +15,9 @@ var debugSelected;
 
 var wordnikData;
 
+var wordOK = 0;
+
 var inputData = "type a word...";
 var inputMode = 1;
+var searchWord;
+var slectedWord = "";
